@@ -16,7 +16,27 @@ module.exports = {
                 test: /\.(ts|tsx)$/,
                 exclude: /node_modules/,
                 use: 'babel-loader'
-            }
+            },
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader']
+            },
+            {
+                test: /\.svg$/,
+                use: [
+                    {
+                        loader: '@svgr/webpack',
+                        options: {
+                            icon: true,
+                        },
+                    },
+                    'file-loader'
+                ],
+            },
+            {
+                test: /\.(png|jpe?g|gif)$/i,
+                use: 'file-loader'
+            },
         ]
     },
     plugins: [
