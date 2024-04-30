@@ -5,4 +5,6 @@ import { ReactAppStack } from './react-app-stack'
 
 const app = new cdk.App()
 
-new ReactAppStack(app, 'InfrastructureStack', {})
+new ReactAppStack(app, 'ReactAppStack', {})
+
+app.synth()

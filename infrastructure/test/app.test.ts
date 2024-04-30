@@ -1,17 +1,11 @@
-// import * as cdk from 'aws-cdk-lib';
-// import { Template } from 'aws-cdk-lib/assertions';
-// import * as Infrastructure from '../lib/infrastructure-stack';
+import { Template } from 'aws-cdk-lib/assertions';
+import * as cdk from 'aws-cdk-lib';
+import { ReactAppStack } from '../src/react-app-stack'
 
-// example test. To run these tests, uncomment this file along with the
-// example resource in lib/infrastructure-stack.ts
-test('SQS Queue Created', () => {
-//   const app = new cdk.App();
-//     // WHEN
-//   const stack = new Infrastructure.InfrastructureStack(app, 'MyTestStack');
-//     // THEN
-//   const template = Template.fromStack(stack);
-
-//   template.hasResourceProperties('AWS::SQS::Queue', {
-//     VisibilityTimeout: 300
-//   });
+test('Deployment Bucket Created', () => {
+    const app = new cdk.App();
+    const stack = new ReactAppStack(app, 'TestReactAppStack');
+    Template.fromStack(stack).hasResourceProperties('AWS::S3::Bucket', {
+        BucketName: 'react-app-deployment-bucket'
+    });
 });
