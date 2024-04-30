@@ -3,8 +3,7 @@ name: CI
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
   test-frontend:
@@ -14,29 +13,29 @@ jobs:
         working-directory: frontend
     
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: 20
-        cache: 'npm'
-        cache-dependency-path: frontend/package-lock.json
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
 
-    - name: Install
-      run: npm install
+      - name: Install
+        run: npm install
 
-    - name: Lint
-      run: npm run lint
+      - name: Lint
+        run: npm run lint
 
-    - name: Format check
-      run: npm run format:check
+      - name: Format check
+        run: npm run format:check
 
-    - name: Test
-      run: npm run test
+      - name: Test
+        run: npm run test
 
-    - name: Build
-      run: npm run build
+      - name: Build
+        run: npm run build
 
   test-infrastructure:
     runs-on: ubuntu-latest
@@ -45,26 +44,32 @@ jobs:
         working-directory: infrastructure
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: 20
-        cache: npm
-        cache-dependency-path: infrastructure/package-lock.json
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: infrastructure/package-lock.json
 
-    - name: Install
-      run: npm install
+      - name: Install AWS CLI
+        run: npm install -g aws-cdk
 
-    - name: Lint
-      run: npm run lint
+      - name: Install
+        run: npm install
 
-    - name: Format check
-      run: npm run format:check
+      - name: Lint
+        run: npm run lint
 
-    - name: Test
-      run: npm run test
+      - name: Format check
+        run: npm run format:check
 
-    - name: Build
-      run: npm run build
+      - name: Test
+        run: npm run test
+
+      - name: Build
+        run: npm run build
+
+      - name: CDK Synth
+        run: npm run synth

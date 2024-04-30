@@ -10,6 +10,7 @@
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
     "test": "jest",
     "build": "tsc",
+    "bootstrap": "cdk bootstrap",
     "deploy": "cdk deploy",
     "synth": "cdk synth"
   },
