@@ -2,16 +2,16 @@ name: CI
 
 on:
   push:
-    branches-ignore: [ "main" ]
+    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
-  test-frontend:
+  build-frontend:
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: frontend
-    
+
     steps:
       - uses: actions/checkout@v4
 
@@ -37,7 +37,15 @@ jobs:
       - name: Build
         run: npm run build
 
-  test-infrastructure:
+      - name: Upload Frontend Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-build
+          path: frontend/dist
+          retention-days: 1
+          if-no-files-found: error
+
+  deploy-infrastructure:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -45,6 +53,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Download Frontend Build Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-build
+          path: frontend/dist
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -55,6 +69,13 @@ jobs:
 
       - name: Install AWS CLI
         run: npm install -g aws-cdk
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: eu-central-1
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Install
         run: npm install
@@ -71,5 +92,5 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: CDK Synth
-        run: npm run synth
+      - name: CDK Deploy
+        run: npm run deploy -- --require-approval never
