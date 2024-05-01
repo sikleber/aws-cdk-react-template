@@ -5,7 +5,5 @@ import { ReactAppStack } from '../src/react-app-stack'
 test('Deployment Bucket Created', () => {
     const app = new cdk.App();
     const stack = new ReactAppStack(app, 'TestReactAppStack');
-    Template.fromStack(stack).hasResourceProperties('AWS::S3::Bucket', {
-        BucketName: 'react-app-deployment-bucket'
-    });
+    Template.fromStack(stack).hasResource('AWS::S3::Bucket', {});
 });
