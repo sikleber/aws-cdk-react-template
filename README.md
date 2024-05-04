@@ -16,5 +16,16 @@ npm run deploy -- --profile <profile> --region <region>
 
 The [cdk.json](infrastructure/cdk.json) file tells the CDK Toolkit how to execute your app.
 
+## GitHub Actions CI/CD
+This project uses GitHub Actions for CI/CD. Two workflows are defined in the [.github/workflows](.github/workflows) directory:
+- [ci.yml](.github/workflows/ci.yml) - runs on every push to any branch except `main`
+- [cd.yml](.github/workflows/cd.yml) - runs on every push to `main` and deploys the application to AWS
 
+To use the CD workflow and deploy the application an AWS account, you need to set up the following secrets in your GitHub repository:
+- `AWS_ACCESS_KEY_ID`
+- `AWS_SECRET_ACCESS_KEY`
 
+Before the first deployment, you may need to bootstrap the CDK in your AWS account (see: [Bootstrapping](https://docs.aws.amazon.com/cdk/v2/guide/bootstrapping.html)).:
+```bash
+npx cdk bootstrap aws://<account>/<region>
+```
