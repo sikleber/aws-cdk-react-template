@@ -12,6 +12,7 @@
   },
   "include": [
     "src/**/*",
+    "test/**/*",
     "webpack.config.ts"
   ]
 }
