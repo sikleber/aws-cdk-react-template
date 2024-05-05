@@ -16,6 +16,9 @@ npm run deploy -- --profile <profile> --region <region>
 
 The [cdk.json](infrastructure/cdk.json) file tells the CDK Toolkit how to execute your app.
 
+### Infrastructure Overview
+<img alt="Infrastructure" src="docs/infrastructure.drawio.png" style="width: 50%;">
+
 ## GitHub Actions CI/CD
 This project uses GitHub Actions for CI/CD. Two workflows are defined in the [.github/workflows](.github/workflows) directory:
 - [ci.yml](.github/workflows/ci.yml) - runs on every push to any branch except `main`
