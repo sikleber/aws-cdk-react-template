@@ -11,13 +11,18 @@ See the [infrastructure package.json](infrastructure/package.json) for relevant 
 
 Deploy the infrastructure using the following commands:
 ```bash
-npm run deploy -- --profile <profile> --region <region>
+npm run deploy -- --profile <profile> --region <region> --context config=dev
 ```
 
 The [cdk.json](infrastructure/cdk.json) file tells the CDK Toolkit how to execute your app.
 
 ### Infrastructure Overview
 <img alt="Infrastructure" src="docs/infrastructure.drawio.png" style="width: 50%;">
+
+### Custom Configuration Settings
+The [infrastructure/config.ts](infrastructure/src/config.ts) reads the configuration specified by the `--context config=<CONFIG_NAME` parameter when deploying the CDK stack.
+Defined settings can be passed to underlying constructs.
+
 
 ## GitHub Actions CI/CD
 This project uses GitHub Actions for CI/CD. Two workflows are defined in the [.github/workflows](.github/workflows) directory:

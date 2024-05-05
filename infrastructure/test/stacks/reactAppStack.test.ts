@@ -1,12 +1,13 @@
 import { Match, Template } from 'aws-cdk-lib/assertions'
 import * as cdk from 'aws-cdk-lib';
-import { ReactAppStack } from '../src/reactAppStack'
+import { ReactAppStack } from '../../src/stacks/reactAppStack'
+import { testConfig } from '../globalFixtures'
 
 let template: Template;
 
 beforeAll(() => {
     const app = new cdk.App();
-    const stack = new ReactAppStack(app, 'TestReactAppStack');
+    const stack = new ReactAppStack(app, 'TestReactAppStack', testConfig);
     template = Template.fromStack(stack);
 })
 
@@ -14,6 +15,7 @@ describe('Deployment Bucket', () => {
     it('should create a S3 bucket', () => {
         template.hasResource('AWS::S3::Bucket', {
             Type: 'AWS::S3::Bucket',
+            DeletionPolicy: 'Delete'
         })
     })
 
