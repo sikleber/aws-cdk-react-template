@@ -54,6 +54,10 @@ describe('CloudFront Distribution', () => {
                         }
                     }],
                     DefaultRootObject: 'index.html',
+                    DefaultCacheBehavior: {
+                        Compress: true,
+                        ViewerProtocolPolicy: 'redirect-to-https'
+                    },
                     CustomErrorResponses: [
                         {
                             ErrorCode: 404,

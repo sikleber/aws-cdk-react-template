@@ -22,7 +22,10 @@ export class ReactAppStack extends cdk.Stack {
     deploymentBucket.grantRead(originAccessIdentity)
 
     const distribution = new cf.Distribution(this, 'ReactAppDistribution', {
-      defaultBehavior: { origin: new cf_origin.S3Origin(deploymentBucket) },
+      defaultBehavior: {
+        origin: new cf_origin.S3Origin(deploymentBucket),
+        viewerProtocolPolicy: cf.ViewerProtocolPolicy.REDIRECT_TO_HTTPS
+      },
       defaultRootObject: 'index.html',
       errorResponses: [
         // Single Page App takes care of routing. Serve every path with index.html
